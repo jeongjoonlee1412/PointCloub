@@ -4,6 +4,7 @@ import numpy as np
 import Activators   # 引入自定义的激活器模块
 import math
 
+
 # 获取卷积区域。input_array为单通道或多通道的矩阵顺。i为横向偏移，j为纵向偏移，stride为步幅，filter_width为过滤器宽度，filter_height为过滤器的高度
 def get_patch(input_array, i, j, filter_width,filter_height, stride):
     '''
@@ -12,10 +13,10 @@ def get_patch(input_array, i, j, filter_width,filter_height, stride):
     '''
     start_i = i * stride
     start_j = j * stride
-    if input_array.ndim == 2:  #如果只有一个通道
-        return input_array[start_i:start_i + filter_height,start_j: start_j + filter_width]
-    elif input_array.ndim == 3:  #如果有多个通道，也就是深度上全选
-        return input_array[:,start_i: start_i + filter_height,start_j: start_j + filter_width]
+    if input_array.ndim == 2:  # 如果只有一个通道
+        return input_array[start_i:start_i + filter_height, start_j: start_j + filter_width]
+    elif input_array.ndim == 3:  # 如果有多个通道，也就是深度上全选
+        return input_array[:, start_i: start_i + filter_height, start_j: start_j + filter_width]
 
 
 # 获取一个2D区域的最大值所在的索引
@@ -36,7 +37,6 @@ def conv(input_array,kernel_array,output_array,stride, bias):
             # 这里是对每个通道的两个矩阵对应元素相乘求和，再将每个通道的和值求和
             kernel_values= (np.multiply(juanjiqu,kernel_array)).sum() # 卷积区与过滤器卷积运算。1，一个通道内，卷积区矩阵与过滤器矩阵对应点相乘后，求和值。2、将每个通道的和值再求和。
             output_array[i][j] = kernel_values + bias  #将卷积结果加上偏量
-
 
 
 # 为数组增加Zero padding。zp步长，自动适配输入为2D和3D的情况
@@ -63,6 +63,7 @@ def padding(input_array, zp):
 def element_wise_op(array, op):
     for i in np.nditer(array,op_flags=['readwrite']):
         i[...] = op(i)   # 将元素i传入op函数，返回值，再修改i
+
 
 # Filter类保存了卷积层的参数以及梯度，并且实现了用梯度下降算法来更新参数。
 class Filter(object):
@@ -94,12 +95,13 @@ class Filter(object):
         self.weights -= learning_rate * self.weights_grad
         self.bias -= learning_rate * self.bias_grad
 
+
 # 用ConvLayer类来实现一个卷积层。下面的代码是初始化一个卷积层，可以在构造函数中设置卷积层的超参数
 class ConvLayer(object):
-    #初始化构造卷积层：输入宽度、输入高度、通道数、滤波器宽度、滤波器高度、滤波器数目、补零数目、步长、激活器、学习速率
+    # 初始化构造卷积层：输入宽度、输入高度、通道数、滤波器宽度、滤波器高度、滤波器数目、补零数目、步长、激活器、学习速率
     def __init__(self, input_width, input_height,channel_number, filter_width,filter_height, filter_number,
                  zero_padding, stride, activator,learning_rate):
-        self.input_width = input_width   #  输入宽度
+        self.input_width = input_width   # 输入宽度
         self.input_height = input_height  # 输入高度
         self.channel_number = channel_number  # 通道数=输入的深度=过滤器的深度
         self.filter_width = filter_width  # 过滤器的宽度
@@ -120,7 +122,7 @@ class ConvLayer(object):
     def forward(self, input_array):
         self.input_array = input_array  # 多个通道的图片，每个通道为一个二维图片
         self.padded_input_array = padding(input_array,self.zero_padding)  # 先将输入补足0
-        for i in range(self.filter_number):  #每个过滤器都产生一个二维数组的输出
+        for i in range(self.filter_number):  # 每个过滤器都产生一个二维数组的输出
             filter = self.filters[i]
             conv(self.padded_input_array,filter.get_weights(), self.output_array[i],self.stride, filter.get_bias())
         # element_wise_op函数实现了对numpy数组进行按元素操作，并将返回值写回到数组中

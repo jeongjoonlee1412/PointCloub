@@ -24,14 +24,15 @@ class FullConnectedLayer(object):
         # 权重数组W。初始化权重为(rand(output_size, input_size) - 0.5) * 2 * sqrt(6 / (output_size + input_size))
         wimin = (output_size - 0.5) * 2 * math.sqrt(6 / (output_size + input_size))
         wimax = (input_size-0.5)*2*math.sqrt(6/(output_size + input_size))
-        # self.W = np.random.uniform(wimin,wimax,(output_size, input_size))  #初始化为-0.1~0.1之间的数。权重的大小。行数=输出个数，列数=输入个数。a=w*x，a和x都是列向量
-        self.W = np.random.uniform(-0.1, 0.1,(output_size, input_size))  # 初始化为-0.1~0.1之间的数。权重的大小。行数=输出个数，列数=输入个数。a=w*x，a和x都是列向量
+        # 初始化为-0.1~0.1之间的数。权重的大小。行数=输出个数，列数=输入个数。a=w*x，a和x都是列向量
+        # self.W = np.random.uniform(wimin,wimax,(output_size, input_size))
+        self.W = np.random.uniform(-0.1, 0.1,(output_size, input_size))   # 初始化为-0.1~0.1之间的数。权重的大小。行数=输出个数，列数=输入个数。a=w*x，a和x都是列向量
         # 偏置项b
         self.b = np.zeros((output_size, 1))  # 全0列向量偏重项
         # 学习速率
         self.learning_rate = learning_rate
         # 输出向量
-        self.output = np.zeros((output_size, 1)) #初始化为全0列向量
+        self.output = np.zeros((output_size, 1))  # 初始化为全0列向量
 
     # 前向计算，预测输出。input_array: 输入列向量，维度必须等于input_size
     def forward(self, input_array):   # 式2

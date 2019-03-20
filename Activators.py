@@ -5,6 +5,7 @@
 
 import numpy as np
 
+
 # rule激活器
 class ReluActivator(object):
     def forward(self, weighted_input):    # 前向计算，计算输出
@@ -12,6 +13,7 @@ class ReluActivator(object):
 
     def backward(self, output):  # 后向计算，计算导数
         return 1 if output > 0 else 0
+
 
 # IdentityActivator激活器.f(x)=x
 class IdentityActivator(object):
@@ -21,7 +23,8 @@ class IdentityActivator(object):
     def backward(self, output):   # 后向计算，计算导数
         return 1
 
-#Sigmoid激活器
+
+# Sigmoid激活器
 class SigmoidActivator(object):
     def forward(self, weighted_input):
         return 1.0 / (1.0 + np.exp(-weighted_input))
@@ -29,6 +32,7 @@ class SigmoidActivator(object):
     def backward(self, output):
         # return output * (1 - output)
         return np.multiply(output, (1 - output))  # 对应元素相乘
+
 
 # tanh激活器
 class TanhActivator(object):

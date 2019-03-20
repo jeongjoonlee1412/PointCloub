@@ -4,7 +4,8 @@ from PIL import Image
 import matplotlib.pylab as plt
 import numpy as np
 import csv
-
+import skimage.data
+import skimage.color
 
 def convolution(data, kernel):
     data_row, data_col = np.shape(data)
@@ -19,31 +20,27 @@ def convolution(data, kernel):
     return state
 
 
-data = []
-kernel =np.array([[1, 0], [1, 1]])
-img = np.zeros((28, 28))
-csv_file = csv.reader(open('E:/robotStudy/digit-recognizer/test.csv', 'r'))
-for file in csv_file:
-    data.append(file)
-for i in range(1, 4):
-    for j in range(784):
-        img[j / 28, j % 28] = int(data[i][j])
-    plt.figure('dog')
-    print(img)
-    # test = convolution(img, kernel)
-    # test = convolution(test, kernel)
-    # test = convolution(test, kernel)
-    # test = convolution(test, kernel)
-    # print(test)
-    plt.imshow(img)
-    plt.show()
-    # imgs = Image.fromarray(img)
-    # imgs.save('E:/picture/2.png')
-    # imgs.show()
+# a = np.arange(8/2, 16-8/2+1)
+# t = np.uint16(a)
+# print(t)
+# print(a)
 
-
-# 卷积层
-
+t = np.random.rand(3)
+print(t)
+# plt.imshow(img2)
+# plt.imshow(img)
+# plt.show()
+# data = []
+# kernel =np.array([[1, 0], [1, 1]])
+# img = np.zeros((28, 28))
+# csv_file = csv.reader(open('E:/robotStudy/digit-recognizer/test.csv', 'r'))
+# for file in csv_file:
+#     data.append(file)
+# for i in range(1, 4):
+#     for j in range(784):
+#         img[j / 28, j % 28] = int(data[i][j])
+#     plt.figure('dog')
+#     print(img)
 #    plt.show()
 # img = Image.open('E:/1.jpg')
 # img = np.array(img)
