@@ -3,32 +3,34 @@
 from PIL import Image
 import matplotlib.pylab as plt
 import numpy as np
+import cv2
 import csv
 import skimage.data
 import skimage.color
 
-def convolution(data, kernel):
-    data_row, data_col = np.shape(data)
-    kernel_row, kernel_col = np.shape(kernel)
-    n = data_col - kernel_col
-    m = data_row - kernel_row
-    state = np.zeros((m+1, n+1))
-    for i in range(m+1):
-        for j in range(n+1):
-            temp = np.multiply(data[i:i+kernel_row,j:j+kernel_col], kernel)
-            state[i][j] = temp.sum()
-    return state
+# a = np.array([[[10,10], [100,10], [100,100], [10,100]]], dtype=np.int32)
+# b = np.array([[[100,100], [200,230], [150,200], [100,220]]], dtype=np.int32)
+# im = np.zeros([240, 320], dtype = np.uint8)
+# cv2.polylines(im, a, 1, 255,5)
+# cv2.fillPoly(im, b, 255)
+# cv2.imshow('test', im)
+# cv2.waitKey(0)
+# plt.imshow(im)
+# plt.show()
 
+a = [[10,10], [100,10], [100,100], [10,100]]
+v_set = np.array(a)
+Area = 0
 
-# a = np.arange(8/2, 16-8/2+1)
-# t = np.uint16(a)
-# print(t)
-# print(a)
-
-t = np.random.rand(3)
-print(t)
-# plt.imshow(img2)
-# plt.imshow(img)
+v_dict = {}
+no = 0
+for v in v_set:
+    v_dict[no] = v
+    no += 1
+for key in v_dict.keys():
+    print(v_dict[key][0])
+# get all vertex（顶点）
+# get the crossover point（交叉点）
 # plt.show()
 # data = []
 # kernel =np.array([[1, 0], [1, 1]])
